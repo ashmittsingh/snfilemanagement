@@ -11,7 +11,7 @@
 
     {{-- Error --}}
     @if ($errors->any())
-        <div class="mb-5 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
+        <div class="mx-4 sm:mx-6 lg:mx-8 mb-5 rounded-lg bg-red-50 border border-red-200 px-4 py-3 text-sm text-red-600">
             {{ $errors->first() }}
         </div>
     @endif
@@ -25,55 +25,60 @@
         <div
             class="px-4 sm:px-6 lg:px-8 mx-4 sm:mx-6 lg:mx-8 bg-white border border-gray-100 shadow-[0_2px_20px_rgba(0,0,0,0.05)] rounded-2xl p-5 sm:p-7 lg:p-8 ">
             <div>
-                <label for="fileName" class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">Directory
+                <label for="directory_name" class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">Directory
                     Name</label>
                 <input id="directory_name" name="directory_name" type="text"
                     value="{{ old('directory_name', $directory->name) }}" placeholder="Enter directory name" maxlength="255"
                     class="w-full rounded-lg border border-[#B70F1D]/40 focus:border-[#B70F1D] focus:ring-2 focus:ring-[#B70F1D]/10 outline-none px-4 py-2.5 sm:py-3 text-sm text-black transition-all" />
-                <div class="error-msg directory_name_error"></div>
+                <div class="error-msg directory_name_error mt-1.5 text-xs text-red-600 font-medium hidden"></div>
             </div>
 
-            <div>
-                <label for="fileType" class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">
-                    File Type</label>
-                <select name="type_display" id="mediaType" disabled
-                    class="w-full rounded-lg border border-[#B70F1D]/40 focus:border-[#B70F1D] focus:ring-2 focus:ring-[#B70F1D]/10 outline-none px-4 py-2.5 sm:py-3 text-sm text-black transition-all">
+            <div class="mt-5">
+    <label for="mediaType" class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">
+        File Type</label>
 
-                    <option value="">
-                        Select File Type
-                    </option>
+    <div class="relative">
+        <select name="type_display" id="mediaType" disabled
+            class="w-full appearance-none rounded-lg border border-[#B70F1D]/40 focus:border-[#B70F1D] focus:ring-2 focus:ring-[#B70F1D]/10 outline-none pl-4 pr-9 py-2.5 sm:py-3 text-sm text-black transition-all">
 
-                    <option value="image" {{ $directory->type === 'image' ? 'selected' : '' }}>
-                        Image
-                    </option>
+            <option value="">
+                Select File Type
+            </option>
 
-                    <option value="reel" {{ $directory->type === 'reel' ? 'selected' : '' }}>
-                        Reel
-                    </option>
+            <option value="image" {{ $directory->type === 'image' ? 'selected' : '' }}>
+                Image
+            </option>
 
-                    <option value="document" {{ $directory->type === 'document' ? 'selected' : '' }}>
-                        Document
-                    </option>
+            <option value="reel" {{ $directory->type === 'reel' ? 'selected' : '' }}>
+                Reel
+            </option>
 
-                </select>
+            <option value="document" {{ $directory->type === 'document' ? 'selected' : '' }}>
+                Document
+            </option>
 
-                <input type="hidden" name="type" value="{{ $directory->type }}">
+        </select>
 
-                <div class="error-msg type_error"></div>
-            </div>
+        <i class="fa-solid fa-angle-down absolute right-3.5 top-1/2 -translate-y-1/2 text-[#B70F1D] text-xs pointer-events-none"></i>
+    </div>
 
-            <div>
+    <input type="hidden" name="type" value="{{ $directory->type }}">
+
+    <div class="error-msg type_error mt-1.5 text-xs text-red-600 font-medium hidden"></div>
+</div>
+
+            <div class="mt-5">
                 <label for="description"
                     class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">Description</label>
                 <textarea id="description" name="description" rows="4" maxlength="1000"
                     placeholder="Enter directory description"
                     class="w-full resize-none rounded-lg border border-[#B70F1D]/40 focus:border-[#B70F1D] focus:ring-2 focus:ring-[#B70F1D]/10 outline-none px-4 py-3 text-sm text-black transition-all">{{ old('description', $directory->description) }}</textarea>
-                <div class="error-msg description_error"></div>
+                <div class="error-msg description_error mt-1.5 text-xs text-red-600 font-medium hidden"></div>
             </div>
 
             {{-- Existing Files --}}
             @if ($directory->files->isNotEmpty())
-                <div id="existingFilesSection">
+                <div id="existingFilesSection" class="mt-5">
                     <span class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">
                         Existing Files
                     </span>
@@ -128,11 +133,11 @@
                 </div>
             @endif
 
-            <div id="reelsUploadSection">
+            <div id="reelsUploadSection" class="mt-5">
                 <span class="block text-xs sm:text-sm font-semibold text-[#B70F1D] mb-2">Upload Media
                 </span>
 
-                <label for="uploadReels"
+                <label for="mediaFiles"
                     class="flex flex-col items-center justify-center text-center border-2 border-dashed border-[#B70F1D]/30 rounded-xl bg-[#B70F1D]/[0.02] hover:bg-[#B70F1D]/[0.04] transition-colors cursor-pointer py-10 sm:py-14 px-4">
                     <input id="mediaFiles" name="files[]" type="file" multiple class="hidden" />
                     <div
@@ -152,7 +157,7 @@
                         Supported formats: -
                     </p>
                 </label>
-                <div class="error-msg files_error"></div>
+                <div class="error-msg files_error mt-1.5 text-xs text-red-600 font-medium hidden"></div>
             </div>
 
             {{-- Selected Files --}}
@@ -170,7 +175,7 @@
                 <div id="selectedFiles" class="space-y-2"></div>
             </div>
 
-            <div class="pt-1">
+            <div class="pt-4">
                 <button type="button" id="submitBtn" onclick="updateMedia()"
                     class="inline-flex items-center justify-center gap-2 w-full sm:w-auto bg-[#B70F1D] hover:bg-[#7A0F17] active:bg-[#650C13] text-white text-sm font-medium rounded-lg px-5 py-2.5 sm:px-6 sm:py-3 transition-colors">
                     <i class="fa-solid fa-plus"></i>
@@ -326,12 +331,19 @@
             */
 
             function showFieldError(field, message) {
-                $('.' + field + '_error').text(message);
+
+                const el = document.querySelector('.' + field + '_error');
+
+                if (!el) return;
+
+                el.textContent = message;
+
+                el.classList.toggle('hidden', !message);
             }
 
 
             function clearFieldError(field) {
-                $('.' + field + '_error').text('');
+                showFieldError(field, '');
             }
 
 
@@ -340,6 +352,7 @@
                     .querySelectorAll('.error-msg')
                     .forEach(function (element) {
                         element.innerText = '';
+                        element.classList.add('hidden');
                     });
             }
 
@@ -565,10 +578,7 @@
 
                     return false;
                 }
-
-
                 clearFieldError('type');
-
                 return true;
             }
 
@@ -1114,7 +1124,12 @@ mediaFiles.addEventListener(
 
             chooseFilesBtn.addEventListener(
                 'click',
-                function () {
+                function (event) {
+
+                    // Prevent the surrounding <label for="mediaFiles"> from
+                    // also firing its own native click on the input, which
+                    // would otherwise open the file dialog twice.
+                    event.preventDefault();
 
                     if (!getCurrentFileRule()) {
                         return;
@@ -1404,6 +1419,10 @@ selectedFiles.splice(
                         data?.redirect
                     ) {
 
+                        if (data.message) {
+                            sessionStorage.setItem('successMessage', data.message);
+                        }
+
                         window.location.href =
                             data.redirect;
 
@@ -1413,13 +1432,13 @@ selectedFiles.splice(
                     throw {
                         message:
                             data?.message ||
-                            'Unable to upload media. Please try again.'
+                            'Unable to update media. Please try again.'
                     };
 
                 } catch (error) {
 
                     console.error(
-                        'Media upload error:',
+                        'Media update error:',
                         error
                     );
 
@@ -1506,14 +1525,14 @@ selectedFiles.splice(
                         */
                         console.error(
                             error?.message ||
-                            'Unable to upload media.'
+                            'Unable to update media.'
                         );
 
                         if (typeof toastr !== 'undefined') {
 
                             toastr.error(
                                 error?.message ||
-                                'Unable to upload media. Please try again.'
+                                'Unable to update media. Please try again.'
                             );
                         }
                     }
@@ -1528,7 +1547,7 @@ selectedFiles.splice(
                     submitBtn.disabled = false;
 
                     submitText.textContent =
-                        'Upload Media';
+                        'Update Media';
 
                     submitSpinner.classList.add('hidden');
 

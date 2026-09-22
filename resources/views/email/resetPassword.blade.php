@@ -226,7 +226,7 @@
             }
 
             #menu2d6dyw:checked~.menu-links {
-                background-color: #fb3c2d !important;
+                background-color: #B70F1D !important;
             }
 
             #menu2d6dyw:checked~.menu-links a {
@@ -275,15 +275,13 @@
             <tr style="vertical-align: top" valign="top">
                 <td style="word-break: break-word; vertical-align: top" valign="top">
 
-                    <div style="background-color: #fff0e4;
+                    <div style="background-color: #ffffff;
     min-width: 320px;
     max-width: 670px;
     word-wrap: break-word;
     word-break: break-word;
     margin: 0 auto;
-    padding-right: 10px;
-    margin-top: 20px;
-               ">
+    padding-right: 10px; margin-top: 20px; border-bottom: 3px solid #B70F1D; ">
                         <div class="block-grid" style="
                   min-width: 320px;
                   max-width: 680px;
@@ -470,8 +468,8 @@
     padding-left: 25px;
     padding-top: 20px;
     padding-bottom: 20px;
-    background: #f3f3f3;
-    border: 1px solid #000;
+    background: #fdecec;
+    border: 1px solid #B70F1D;
     margin: 25px 0 2px;
     border-radius: 5px;
     vertical-align: middle;">
@@ -498,12 +496,12 @@
                                                             </span><br>
                                                             <p style="margin-top: 2rem;"><a
                                                                     href="{{url('/admin/reset-password' . '/' . $token)}}"
-                                                                    style="        background: #f5a623;
-padding: 14px 15px;
-    color: #000;
+                                                                    style="        background: #B70F1D;
+padding: 14px 22px;
+    color: #ffffff;
     font-size: 15px;
-    border-radius: 5px;
-    font-weight: 500;
+    border-radius: 30px;
+    font-weight: 600;
     text-decoration: none;font-family:'Roboto'!important;">Reset Password</a></p>
                                                             <br><span style=" margin: 0;
     line-height: 27px;
@@ -531,8 +529,8 @@ padding: 14px 15px;
                               ">
                                                 Team,</p>
                                             <p style="font-size: 19px;
-                                                        color: #000;
-                                                         font-weight: 500;text-align: left;padding-left: 25px;
+                                                        color: #B70F1D;
+                                                         font-weight: 700;text-align: left;padding-left: 25px;
                                                          margin-top:0px; ">
                                                 <b>BrizApparelGroup</b>
                                             </p>
@@ -544,7 +542,7 @@ padding: 14px 15px;
                     </div>
 
 
-                    <div style="background-color: #f5a623; border-top:1px solid  #212121;  max-width: 680px;
+                    <div style="background-color: #B70F1D; border-top:1px solid #8f0c17;  max-width: 680px;
                   overflow-wrap: break-word;
                   word-wrap: break-word;
                   word-break: break-word;
@@ -632,7 +630,7 @@ padding: 14px 15px;
                                                     padding: 10px 0px;
                                                   " valign="top">
                                                                             <div class="text-left" style="text-align: center;
-    color: #000000;
+    color: #ffffff;
     font-weight: 500;
     font-size: 14px;
     letter-spacing: .3px;">

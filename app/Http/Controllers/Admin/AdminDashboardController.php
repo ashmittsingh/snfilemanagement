@@ -26,13 +26,14 @@ class AdminDashboardController extends Controller
 
         $type = $request->input('type');
 
-        $allowedTypes = [
-            'image',
-            'reel',
-            'document',
-        ];
+        $types = MediaDirectory::query()
+            ->whereNotNull('type')
+            ->where('type', '!=', '')
+            ->distinct()
+            ->orderBy('type')
+            ->pluck('type');
 
-        if (!in_array($type, $allowedTypes, true)) {
+        if ($type !== null && !$types->contains($type)) {
             $type = null;
         }
 
@@ -149,6 +150,7 @@ class AdminDashboardController extends Controller
                 'totalDocuments',
                 'search',
                 'type',
+                'types',
                 'pageTitle'
             )
         );
@@ -494,4 +496,66 @@ class AdminDashboardController extends Controller
             )
         );
     }
+
+    public function download(
+        MediaFile $file,
+        BunnyStreamService $bunnyStreamService
+    ) {
+        $file->loadMissing('directory');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Bunny Stream Reel / Video
+        |--------------------------------------------------------------------------
+        */
+        if ($file->directory?->type === 'reel') {
+
+            if (!$file->bunny_video_id) {
+                abort(404, 'Bunny video not found.');
+            }
+
+            $downloadUrl = $bunnyStreamService->getDownloadUrl(
+                $file->bunny_video_id
+            );
+
+            if (!$downloadUrl) {
+                abort(404, 'Video download is not available.');
+            }
+
+            return redirect()->away($downloadUrl);
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Bunny Storage Image / Document
+        |--------------------------------------------------------------------------
+        */
+        $downloadUrl = $file->storage_url;
+
+        if (!$downloadUrl) {
+            abort(404, 'File not found.');
+        }
+
+        $fileName = $file->file_name ?: 'download';
+
+        return response()->streamDownload(
+            function () use ($downloadUrl) {
+
+                $stream = fopen($downloadUrl, 'rb');
+
+                if ($stream === false) {
+                    abort(404, 'Unable to download file.');
+                }
+
+                while (!feof($stream)) {
+                    echo fread($stream, 1024 * 1024);
+                    flush();
+                }
+
+                fclose($stream);
+            },
+            $fileName
+        );
+    }
+
 }
